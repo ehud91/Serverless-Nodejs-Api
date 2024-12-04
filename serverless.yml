@@ -1,0 +1,41 @@
+service: serverless-nodejs-api
+frameworkVersion: '4'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    #DEBUG: {env:DEBUG, 0}
+    #DATABASE_URL: ${env:DATABASE_URL, "fallback value"}
+    DEBUG: "0",
+    DATABASE: "postgresql://neondb_owner:5WcvdJq9anOe@ep-solitary-art-a52xky98.us-east-2.aws.neon.tech/neondb?sslmode=require",
+  iam:
+    role:
+      name: serverless-ssm-role-${env.STAGE, "prod"}
+      statements: 
+        - Effect: 'Allow'
+          Resource: '*'
+          Action:
+            - "ssm:GetParameter"
+            - "ssm:GetParameters"
+            - "ssm:GetParametersByPath"
+            - "ssm:GetParameterHistory"
+            - "ssm:DescribeParameters"
+
+functions:
+  api:
+    handler: src/app.handler
+    events:
+      - httpApi: '*'
+
+custom:
+  dotenv:
+    exclude:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin

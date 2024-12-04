@@ -1,0 +1,30 @@
+{
+  "name": "serverless-nodejs-api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "serverless offline --stage dev",
+    "info": "serverless info stage prod --region us-east-2",
+    "deploy": "serverless deploy --stage prod --region us-east-2",
+    "deploy-dev-stage": "serverless deploy --stage dev --region us-east-2",
+    "info-dev-stage": "serverless info --stage prod --region us-east-2",
+    "remove": "serverless remove --stage prod --region us-east-2",
+    "generate": "drizzle-kit generate:pg --config=drizzle.config.js",
+    "migrate": "tsx src/cli/migrator.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.699.0",
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.36.4",
+    "express": "^4.21.1",
+    "serverless-http": "^3.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.6",
+    "drizzle-kit": "^0.28.1",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^14.3.4",
+    "tsx": "^4.19.2"
+  }
+}
